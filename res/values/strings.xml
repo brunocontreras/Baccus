@@ -4,5 +4,7 @@
     <string name="app_name">Baccus</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="vegabal">Cambiar a Vegabal</string>
+    <string name="bembibre">Cambiar a Bembibre</string>
 
 </resources>
