@@ -1,4 +1,4 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -6,36 +6,37 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="#FF0066"
+    android:layout_marginTop="20dp"
     tools:context="com.utad.baccus.MainActivity" >
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+	<ImageView
+	    android:id="@+id/wine_image"
+	    android:layout_width="wrap_content"
+	    android:contentDescription="@string/winde_description"	    
+	    android:layout_gravity="bottom|center"
+	    android:layout_height="100dp"
+	    android:src="@drawable/vegabal" />
 
-    <ImageView
-        android:id="@+id/wine_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:src="@drawable/vegabal" />
+	<LinearLayout
+	    android:orientation="horizontal"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:background="@android:color/white" >
+	    
+	    <Button
+	        android:id="@+id/btn_Vegabal"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:onClick="changeImage"
+	        android:text="@string/vegabal" />
 
-    <Button
-        android:id="@+id/btn_Bembibre"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="51dp"
-        android:onClick="changeImage"
-        android:text="@string/bembibre" />
-
-    <Button
-        android:id="@+id/btn_Vegabal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:onClick="changeImage"
-        android:text="@string/vegabal" />
-
-</RelativeLayout>
+    	<Button
+	        android:id="@+id/btn_Bembibre"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:onClick="changeImage"
+	        android:text="@string/bembibre" />
+	</LinearLayout>
+	
+</FrameLayout>
