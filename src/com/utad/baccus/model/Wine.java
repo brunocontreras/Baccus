@@ -12,9 +12,11 @@ public class Wine {
 	private List<String> mGrapes;
 	private int mImage;
 	private int mRating;
+	private String mNotes;
+
 	
 	public Wine(String name, String type, String uRL, String wineHouse,
-			int image, int rating) {
+			int image, int rating, String notes) {
 		super();
 		mName = name;
 		mType = type;
@@ -23,6 +25,7 @@ public class Wine {
 		mImage = image;
 		mRating = rating;
 		mGrapes = new LinkedList<String>();
+		mNotes = notes;
 	}
 	
 	public String getName() {
@@ -63,6 +66,12 @@ public class Wine {
 	}
 	public void setRating(int rating) {
 		mRating = rating;
+	}
+	public String getNotes() {
+		return mNotes;
+	}
+	public void setNotes(String notes) {
+		mNotes = notes;
 	}
 	public void addGrape(String grape) {
 		mGrapes.add(grape);

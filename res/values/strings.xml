@@ -6,6 +6,6 @@
     <string name="action_settings">Settings</string>
     <string name="vegabal">Cambiar a Vegabal</string>
     <string name="bembibre">Cambiar a Bembibre</string>
-    <string name="winde_description">Una imagen de vino</string>
+    <string name="wine_description">Una imagen de vino</string>
 
 </resources>
