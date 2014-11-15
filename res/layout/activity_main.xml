@@ -104,6 +104,27 @@
 	        android:layout_below="@+id/wineHouse"
 	        android:isIndicator="true"
 	        android:numStars="5" />
+	    
+	    <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/rating"
+                android:layout_below="@+id/rating"
+                android:layout_marginTop="10dp"
+                android:text="@string/grape_types"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="#aaffffff" />
+
+         <LinearLayout
+             android:id="@+id/grapes"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_alignLeft="@+id/wineHouse"
+             android:layout_alignRight="@+id/wineHouse"
+             android:layout_below="@+id/textView1"
+             android:layout_marginTop="5dp"
+             android:orientation="vertical" />
 
 	    <ScrollView 
 	        android:layout_width="wrap_content"
@@ -123,15 +144,4 @@
 	        	android:padding="8dp" />
 	    </ScrollView>
 
-	    <LinearLayout
-	        android:id="@+id/grapes"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_alignBottom="@+id/wine_image"
-	        android:layout_alignLeft="@+id/wineHouse"
-	        android:layout_alignRight="@+id/wineHouse"
-	        android:layout_below="@+id/rating"
-	        android:orientation="vertical" >
-	    </LinearLayout>
-	
 </RelativeLayout>
