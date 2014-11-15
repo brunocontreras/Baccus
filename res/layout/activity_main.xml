@@ -80,7 +80,7 @@
 	        android:layout_alignLeft="@+id/wine_name"
 	        android:layout_alignParentRight="true"
 	        android:layout_below="@+id/wine_name"
-	        android:layout_marginTop="0dp"
+	        android:layout_marginTop="5dp"
 	        android:textAppearance="?android:attr/textAppearanceMedium"
 	        android:textColor="#aaffffff" />
 
@@ -91,7 +91,7 @@
 	        android:layout_alignLeft="@+id/wine_type"
 	        android:layout_alignParentRight="true"
 	        android:layout_below="@+id/wine_type"
-	        android:layout_marginTop="0dp"
+	        android:layout_marginTop="5dp"
 	        android:textAppearance="?android:attr/textAppearanceMedium"
 	        android:textColor="#aaffffff" />
 	    
@@ -102,6 +102,7 @@
 	        android:layout_height="wrap_content"
 	        android:layout_alignLeft="@+id/wineHouse"
 	        android:layout_below="@+id/wineHouse"
+	        android:layout_marginTop="5dp"
 	        android:isIndicator="true"
 	        android:numStars="5" />
 	    
@@ -120,6 +121,7 @@
              android:id="@+id/grapes"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
+             android:layout_alignBottom="@+id/wine_image"
              android:layout_alignLeft="@+id/wineHouse"
              android:layout_alignRight="@+id/wineHouse"
              android:layout_below="@+id/textView1"
