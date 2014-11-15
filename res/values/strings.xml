@@ -8,5 +8,8 @@
     <string name="bembibre">Cambiar a Bembibre</string>
     <string name="wine_description">Una imagen de vino</string>
     <string name="grapes_list_header">Grape Types</string>
+    <string name="reload">Recargar</string>
+    <string name="gotoweb">Web</string>
+    <string name="title_activity_settings">SettingsActivity</string>
 
 </resources>

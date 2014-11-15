@@ -1,18 +1,25 @@
-package com.utad.baccus;
+package com.utad.baccus.controller;
 
-import android.app.Activity;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import com.utad.baccus.model.Wine;
 import android.widget.ProgressBar;
 
-public class WebActivity extends Activity {
+import com.utad.baccus.R;
+import com.utad.baccus.model.Wine;
+
+public class WebActivity extends ActionBarActivity {
 
 	private WebView mBrowser = null;
-	private static final String CURRENT_URL = "CURRENT_URL";
+	private static final String CURRENT_URL = "com.utad.baccus.controller.CURRENT_URL";
+	private static final int MENU_RELOAD = 0;
+	
+	public static final String EXTRA_URL = "URL";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -20,10 +27,8 @@ public class WebActivity extends Activity {
 		
 		setContentView(R.layout.activity_web);
 		
-		// Creo el modelo
-		Wine vegaval = new Wine("Vegaval", "Tinto", "http://www.vegaval.com/es/", "Miguel Calatayud", R.drawable.vegaval, 4, "Lorem fistrum pupita pupita a gramenawer me cago en tus muelas sexuarl. Por la gloria de mi madre benemeritaar no te digo trigo por no llamarte Rodrigor diodeno te voy a borrar el cerito. No puedor al ataquerl a wan caballo blanco caballo negroorl llevame al sircoo quietooor pupita de la pradera a peich ahorarr sexuarl. Tiene musho peligro te voy a borrar el cerito a wan tiene musho peligro pupita jarl ahorarr se calle ustée a wan pecador. A peich apetecan me cago en tus muelas al ataquerl. Qué dise usteer condemor me cago en tus muelas de la pradera pupita mamaar no te digo trigo por no llamarte Rodrigor ese hombree tiene musho peligro diodeno te va a hasé pupitaa.");
-        vegaval.addGrape("Mencía");
-        vegaval.addGrape("Garnacha");
+		// Recojo el modelo
+		String url = getIntent().getStringExtra(CURRENT_URL);
 		
         final ProgressBar loading = (ProgressBar) findViewById(R.id.loading);
         
@@ -49,7 +54,7 @@ public class WebActivity extends Activity {
         	mBrowser.loadUrl(savedInstanceState.getString(CURRENT_URL));
         }
         else {
-        	mBrowser.loadUrl(vegaval.getURL());
+        	mBrowser.loadUrl(url);
         }
 	}
 	
@@ -59,4 +64,25 @@ public class WebActivity extends Activity {
 		String currentURL = mBrowser.getUrl();
 		outState.putString(CURRENT_URL, currentURL);
 	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+		MenuItem reload = menu.add(Menu.NONE, MENU_RELOAD, 0, R.string.reload);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		boolean defaultValue = super.onOptionsItemSelected(item);
+		if (item.getItemId() == MENU_RELOAD) {
+			mBrowser.reload();
+			return true;
+		}
+		else {
+			return defaultValue;
+		}
+	}
+	
+	
 }
