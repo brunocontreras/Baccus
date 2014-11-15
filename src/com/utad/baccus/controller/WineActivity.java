@@ -17,22 +17,19 @@ import com.utad.baccus.R;
 import com.utad.baccus.model.Wine;
 
 
-public class MainActivity extends ActionBarActivity {
+public class WineActivity extends ActionBarActivity {
 	
 	private Wine mWine = null;
 	private ImageView mWineImage = null;
 	private static String LOG = "PRUEBAS";
+	public static final String WINE = "WINE";
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
-        //http://www.vegaval.com/es/
-        
-        mWine = new Wine("Vegaval", "Tinto", "http://www.marca.com/", "Miguel Calatayud", R.drawable.vegaval, 4, "Lorem fistrum pupita pupita a gramenawer me cago en tus muelas sexuarl. Por la gloria de mi madre benemeritaar no te digo trigo por no llamarte Rodrigor diodeno te voy a borrar el cerito. No puedor al ataquerl a wan caballo blanco caballo negroorl llevame al sircoo quietooor pupita de la pradera a peich ahorarr sexuarl. Tiene musho peligro te voy a borrar el cerito a wan tiene musho peligro pupita jarl ahorarr se calle ustée a wan pecador. A peich apetecan me cago en tus muelas al ataquerl. Qué dise usteer condemor me cago en tus muelas de la pradera pupita mamaar no te digo trigo por no llamarte Rodrigor ese hombree tiene musho peligro diodeno te va a hasé pupitaa.");
-        mWine.addGrape("Mencía");
-        mWine.addGrape("Garnacha");
+        mWine = (Wine) getIntent().getSerializableExtra(WINE);
         
         TextView txt_wineName = (TextView) findViewById(R.id.wine_name);
         txt_wineName.setText(mWine.getName());
@@ -86,7 +83,6 @@ public class MainActivity extends ActionBarActivity {
 			return defaultValue;
 		}
 	}
-
 	
     @Override
 	protected void onActivityResult(int requestCode, int result, Intent intent) {
@@ -96,12 +92,10 @@ public class MainActivity extends ActionBarActivity {
 			int optionSelected = intent.getIntExtra(SettingsActivity.OPTION_SELECTED, -1); 
 			if (optionSelected != -1 && optionSelected == SettingsActivity.OPTION_NORMAL) {
 				Log.v(LOG, "Normal");
-				// A la imagen le doy un scale type normal
 				mWineImage.setScaleType(ScaleType.FIT_CENTER);
 			}
 			else if (optionSelected != -1 && optionSelected == SettingsActivity.OPTION_FIT) {
 				Log.v(LOG, "Fit");
-				// A la imagen le doy un scale type estirado
 				mWineImage.setScaleType(ScaleType.FIT_XY);
 			}
 		}

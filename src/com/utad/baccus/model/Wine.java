@@ -1,9 +1,10 @@
 package com.utad.baccus.model;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Wine {
+public class Wine implements Serializable {
 	
 	private String mName;
 	private String mType;
