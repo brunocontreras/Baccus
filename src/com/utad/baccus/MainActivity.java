@@ -33,7 +33,7 @@ public class MainActivity extends ActionBarActivity {
         TextView txt_wineType = (TextView) findViewById(R.id.wine_type);
         txt_wineType.setText(vegaval.getType());
         
-        TextView txt_wineHouse = (TextView) findViewById(R.id.wineHouse);
+        TextView txt_wineHouse = (TextView) findViewById(R.id.winehouse);
         txt_wineHouse.setText(vegaval.getWineHouse());
         
         TextView txt_wineNotes = (TextView) findViewById(R.id.wine_notes);

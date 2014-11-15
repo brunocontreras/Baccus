@@ -11,6 +11,9 @@ import android.widget.ProgressBar;
 
 public class WebActivity extends Activity {
 
+	private WebView mBrowser = null;
+	private static final String CURRENT_URL = "CURRENT_URL";
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -24,15 +27,15 @@ public class WebActivity extends Activity {
 		
         final ProgressBar loading = (ProgressBar) findViewById(R.id.loading);
         
-		WebView browser = (WebView) findViewById(R.id.browser);
-		browser.setWebViewClient(new WebViewClient() {
+        mBrowser = (WebView) findViewById(R.id.browser);
+        mBrowser.setWebViewClient(new WebViewClient() {
 			
 			@Override
 			public void onPageStarted(WebView view, String url, Bitmap favicon) {
 				super.onPageStarted(view, url, favicon);
 				loading.setVisibility(View.VISIBLE);
 			}
-
+			
 			@Override
 			public void onPageFinished(WebView view, String url) {
 				super.onPageFinished(view, url);
@@ -40,6 +43,20 @@ public class WebActivity extends Activity {
 			}
 			
 		});
-		browser.loadUrl(vegaval.getURL());
+        
+        // Carga la web del modelo
+        if (savedInstanceState != null && savedInstanceState.containsKey(CURRENT_URL)) {
+        	mBrowser.loadUrl(savedInstanceState.getString(CURRENT_URL));
+        }
+        else {
+        	mBrowser.loadUrl(vegaval.getURL());
+        }
+	}
+	
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		String currentURL = mBrowser.getUrl();
+		outState.putString(CURRENT_URL, currentURL);
 	}
 }
