@@ -2,6 +2,7 @@ package com.utad.baccus.controller;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -21,8 +22,10 @@ public class WineActivity extends ActionBarActivity {
 	
 	private Wine mWine = null;
 	private ImageView mWineImage = null;
-	private static String LOG = "PRUEBAS";
+	private int mOptionSelected;
+	
 	public static final String WINE = "WINE";
+	public static final String CURRENT_SCALETYPE = "CURRENT_SCALETYPE";
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +63,12 @@ public class WineActivity extends ActionBarActivity {
         
         RatingBar ratingBar = (RatingBar) findViewById(R.id.rating);
         ratingBar.setProgress(mWine.getRating());
+        
+        // Carga la web del modelo
+    	if (savedInstanceState != null && savedInstanceState.containsKey(CURRENT_SCALETYPE)) {
+        	mOptionSelected = savedInstanceState.getInt(CURRENT_SCALETYPE);
+        	ChangeScaleType(mOptionSelected);
+        }
     }
     
     @Override
@@ -89,15 +98,8 @@ public class WineActivity extends ActionBarActivity {
 		super.onActivityResult(requestCode, result, intent);
 		
 		if (requestCode == SettingsActivity.REQUEST_SELECT_SCALE_TYPE && result == RESULT_OK) {
-			int optionSelected = intent.getIntExtra(SettingsActivity.OPTION_SELECTED, -1); 
-			if (optionSelected != -1 && optionSelected == SettingsActivity.OPTION_NORMAL) {
-				Log.v(LOG, "Normal");
-				mWineImage.setScaleType(ScaleType.FIT_CENTER);
-			}
-			else if (optionSelected != -1 && optionSelected == SettingsActivity.OPTION_FIT) {
-				Log.v(LOG, "Fit");
-				mWineImage.setScaleType(ScaleType.FIT_XY);
-			}
+			mOptionSelected = intent.getIntExtra(SettingsActivity.OPTION_SELECTED, -1); 
+			ChangeScaleType(mOptionSelected);
 		}
 	}
 
@@ -108,4 +110,19 @@ public class WineActivity extends ActionBarActivity {
     		startActivity(webIntent);
     	}
     }
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		outState.putInt(CURRENT_SCALETYPE, mOptionSelected);
+	}
+	
+	public void ChangeScaleType(int optionSelected) {
+		if (optionSelected != -1 && optionSelected == SettingsActivity.OPTION_NORMAL) {
+			mWineImage.setScaleType(ScaleType.FIT_CENTER);
+		}
+		else if (optionSelected != -1 && optionSelected == SettingsActivity.OPTION_FIT) {
+			mWineImage.setScaleType(ScaleType.FIT_XY);
+		}
+	}
 }
