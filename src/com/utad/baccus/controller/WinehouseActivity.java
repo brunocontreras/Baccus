@@ -1,34 +1,37 @@
 package com.utad.baccus.controller;
 
-import android.app.TabActivity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.TabHost;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTabHost;
 import android.widget.TabHost.TabSpec;
 
 import com.utad.baccus.R;
 import com.utad.baccus.model.Wine;
 import com.utad.baccus.model.Winehouse;
 
-public class WinehouseActivity extends TabActivity {
+public class WinehouseActivity extends FragmentActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_winehouse);
 		
-		TabHost tabHost = getTabHost();
+		FragmentTabHost tabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
+		tabHost.setup(this,  getSupportFragmentManager(), android.R.id.tabcontent);
 		
 		Winehouse winehouse = Winehouse.getInstance();
 		for (int i = 0; i < winehouse.getWineCount(); i++) {
-			Intent wineIntent = new Intent(this, WineActivity.class);
+
 			Wine currentWine = winehouse.getWine(i);
-			wineIntent.putExtra(WineActivity.EXTRA_WINE, currentWine);
+			
+			Bundle arguments = new Bundle();
+			arguments.putSerializable(WineFragment.ARG_WINE, currentWine);
+			
 			TabSpec tab = tabHost.newTabSpec(currentWine.getName());
 			tab.setIndicator(currentWine.getName());
-			tab.setContent(wineIntent);
 			
-			tabHost.addTab(tab);
+			tabHost.addTab(tab, WineFragment.class, arguments);
 		}
 	}
 }
