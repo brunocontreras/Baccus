@@ -1,16 +1,15 @@
 package com.utad.baccus.controller;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
+import android.support.v7.app.ActionBarActivity;
 import android.widget.TabHost.TabSpec;
 
 import com.utad.baccus.R;
 import com.utad.baccus.model.Wine;
 import com.utad.baccus.model.Winehouse;
 
-public class WinehouseActivity extends FragmentActivity {
+public class WinehouseActivity extends ActionBarActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

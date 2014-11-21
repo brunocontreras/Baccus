@@ -11,9 +11,6 @@ import com.utad.baccus.R;
 
 public class SettingsActivity extends FragmentActivity {
 	
-	public static final String OPTION_SELECTED = "OPTION_SELECTED";
-	public static final int OPTION_NORMAL = 0;
-	public static final int OPTION_FIT = 1;
 	public static final int REQUEST_SELECT_SCALE_TYPE = 0;
 	
 
@@ -28,23 +25,5 @@ public class SettingsActivity extends FragmentActivity {
 			.beginTransaction()
 			.add(R.id.settings_fragment_placeholder, fragment)
 			.commit();
-	}
-	
-	public void cancel(View v) {
-		setResult(RESULT_CANCELED);
-		finish();
-	}
-	
-	public void save(View v) {
-		Intent intent = getIntent();
-		RadioGroup mRadios = (RadioGroup) findViewById(R.id.radio_options);
-		if (mRadios.getCheckedRadioButtonId() == R.id.radio_normal) {
-			intent.putExtra(OPTION_SELECTED, OPTION_NORMAL);
-		}
-		else {
-			intent.putExtra(OPTION_SELECTED, OPTION_FIT);
-		}
-		setResult(RESULT_OK, intent);
-		finish();
 	}
 }
