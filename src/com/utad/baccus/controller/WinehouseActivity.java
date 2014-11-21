@@ -8,7 +8,7 @@ import android.widget.TabHost.TabSpec;
 
 import com.utad.baccus.R;
 import com.utad.baccus.model.Wine;
-import com.utad.baccus.model.Wines;
+import com.utad.baccus.model.Winehouse;
 
 public class WinehouseActivity extends TabActivity {
 
@@ -19,35 +19,16 @@ public class WinehouseActivity extends TabActivity {
 		
 		TabHost tabHost = getTabHost();
 		
-		Wines wines = new Wines();
-
-		for (Wine wine : wines.getList()) {
-			
-			Intent intent = new Intent(this, WineActivity.class);
-			intent.putExtra(WineActivity.WINE, wine);
-			TabSpec tab = tabHost.newTabSpec(wine.getName());
-			tab.setIndicator(wine.getName());
-			tab.setContent(intent);
+		Winehouse winehouse = Winehouse.getInstance();
+		for (int i = 0; i < winehouse.getWineCount(); i++) {
+			Intent wineIntent = new Intent(this, WineActivity.class);
+			Wine currentWine = winehouse.getWine(i);
+			wineIntent.putExtra(WineActivity.EXTRA_WINE, currentWine);
+			TabSpec tab = tabHost.newTabSpec(currentWine.getName());
+			tab.setIndicator(currentWine.getName());
+			tab.setContent(wineIntent);
 			
 			tabHost.addTab(tab);
-			
 		}
-		
-		
-//		Intent vegavalIntent = new Intent(this, WineActivity.class);
-//		vegavalIntent.putExtra(WineActivity.WINE, vegaval);
-//		TabSpec tabVegaval = tabHost.newTabSpec("Vegaval");
-//		tabVegaval.setIndicator("Vegaval");
-//		tabVegaval.setContent(vegavalIntent);
-		
-//		Intent bembibreIntent = new Intent(this, WineActivity.class);
-//		bembibreIntent.putExtra(WineActivity.WINE, bembibre);
-//		TabSpec tabBembibre = tabHost.newTabSpec("Bembibre");
-//		tabBembibre.setIndicator("Bembibre");
-//		tabBembibre.setContent(bembibreIntent);
-		
-//		tabHost.addTab(tabVegaval);
-//		tabHost.addTab(tabBembibre);
 	}
-
 }

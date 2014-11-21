@@ -3,6 +3,7 @@ package com.utad.baccus.controller;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -20,49 +21,24 @@ import com.utad.baccus.model.Wine;
 
 public class WineActivity extends ActionBarActivity {
 	
-	private Wine mWine = null;
-	private ImageView mWineImage = null;
 	private int mOptionSelected;
 	
-	public static final String WINE = "WINE";
+	public static final String EXTRA_WINE = "WINE";
 	public static final String CURRENT_SCALETYPE = "CURRENT_SCALETYPE";
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_wine_fragment_container);
         
-        mWine = (Wine) getIntent().getSerializableExtra(WINE);
+        WineFragment fragment = new WineFragment();
+        Bundle arguments = new Bundle();
+        arguments.putSerializable(WineFragment.ARG_WINE, getIntent().getSerializableExtra(EXTRA_WINE));
+        fragment.setArguments(arguments);
         
-        TextView txt_wineName = (TextView) findViewById(R.id.wine_name);
-        txt_wineName.setText(mWine.getName());
-        
-        TextView txt_wineType = (TextView) findViewById(R.id.wine_type);
-        txt_wineType.setText(mWine.getType());
-        
-        TextView txt_wineHouse = (TextView) findViewById(R.id.winehouse);
-        txt_wineHouse.setText(mWine.getWineHouse());
-        
-        TextView txt_wineNotes = (TextView) findViewById(R.id.wine_notes);
-        txt_wineNotes.setText(mWine.getNotes());
-        
-        mWineImage = (ImageView)findViewById(R.id.wine_image);
-        mWineImage.setImageResource(mWine.getImage());
-        
-        // Creating grape texts
-        LinearLayout grapesContainer = (LinearLayout)findViewById(R.id.grapes);
-        for (String grape : mWine.getGrapes()) {
-        	TextView text = new TextView(this);
-        	text.setText(grape);
-        	LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-        			LinearLayout.LayoutParams.MATCH_PARENT,
-        			LinearLayout.LayoutParams.WRAP_CONTENT);
-        	text.setLayoutParams(params);
-        	grapesContainer.addView(text);
-        }
-        
-        RatingBar ratingBar = (RatingBar) findViewById(R.id.rating);
-        ratingBar.setProgress(mWine.getRating());
+        FragmentTransaction trx = getSupportFragmentManager().beginTransaction();
+        trx.add(R.id.wine_fragment_placeholder, fragment);
+        trx.commit();
         
         // Carga la web del modelo
     	if (savedInstanceState != null && savedInstanceState.containsKey(CURRENT_SCALETYPE)) {
@@ -106,6 +82,7 @@ public class WineActivity extends ActionBarActivity {
 	public void showWeb(View v) {
     	if (v.getId() == R.id.btn_gotoweb) {
     		Intent webIntent = new Intent(this, WebActivity.class);
+    		Wine mWine = (Wine) getIntent().getSerializableExtra(EXTRA_WINE); 
     		webIntent.putExtra(WebActivity.EXTRA_URL, mWine.getURL());
     		startActivity(webIntent);
     	}
@@ -118,6 +95,8 @@ public class WineActivity extends ActionBarActivity {
 	}
 	
 	public void ChangeScaleType(int optionSelected) {
+		ImageView mWineImage = (ImageView) findViewById(R.id.wine_image);
+		
 		if (optionSelected != -1 && optionSelected == SettingsActivity.OPTION_NORMAL) {
 			mWineImage.setScaleType(ScaleType.FIT_CENTER);
 		}
