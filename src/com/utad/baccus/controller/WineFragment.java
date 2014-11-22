@@ -27,7 +27,6 @@ public class WineFragment extends Fragment {
 	private Wine mWine = null;
 	private ImageView mWineImage = null;
 	private View mRoot = null;
-	private int mOptionSelected;
 	
 	public static final String ARG_WINE = "WINE";
 	public static final String CURRENT_SCALETYPE = "CURRENT_SCALETYPE";
@@ -89,8 +88,7 @@ public class WineFragment extends Fragment {
         
         // Carga la web del modelo
     	if (savedInstanceState != null && savedInstanceState.containsKey(CURRENT_SCALETYPE)) {
-        	mOptionSelected = savedInstanceState.getInt(CURRENT_SCALETYPE);
-        	ChangeScaleType(mOptionSelected);
+        	mWineImage.setScaleType((ScaleType) savedInstanceState.getSerializable(CURRENT_SCALETYPE));
         }
         
 		return mRoot;
@@ -122,25 +120,19 @@ public class WineFragment extends Fragment {
 		super.onActivityResult(requestCode, result, intent);
 		
 		if (requestCode == SettingsActivity.REQUEST_SELECT_SCALE_TYPE && result == Activity.RESULT_OK) {
-			mOptionSelected = intent.getIntExtra(SettingsFragment.OPTION_SELECTED, -1); 
-			ChangeScaleType(mOptionSelected);
+			int optionSelected = intent.getIntExtra(SettingsFragment.OPTION_SELECTED, -1); 
+			if (optionSelected != -1 && optionSelected == SettingsFragment.OPTION_NORMAL) {
+				mWineImage.setScaleType(ScaleType.FIT_CENTER);
+			}
+			else if (optionSelected != -1 && optionSelected == SettingsFragment.OPTION_FIT) {
+				mWineImage.setScaleType(ScaleType.FIT_XY);
+			}
 		}
 	}
 	
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		outState.putInt(CURRENT_SCALETYPE, mOptionSelected);
-	}
-	
-	public void ChangeScaleType(int optionSelected) {
-		ImageView mWineImage = (ImageView) mRoot.findViewById(R.id.wine_image);
-		
-		if (optionSelected != -1 && optionSelected == SettingsFragment.OPTION_NORMAL) {
-			mWineImage.setScaleType(ScaleType.FIT_CENTER);
-		}
-		else if (optionSelected != -1 && optionSelected == SettingsFragment.OPTION_FIT) {
-			mWineImage.setScaleType(ScaleType.FIT_XY);
-		}
+		outState.putSerializable(CURRENT_SCALETYPE, mWineImage.getScaleType());
 	}
 }

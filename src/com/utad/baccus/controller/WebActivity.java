@@ -2,6 +2,7 @@ package com.utad.baccus.controller;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -25,15 +26,20 @@ public class WebActivity extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_web_fragment_container);
 
-		WebFragment fragment = new WebFragment();
-		Bundle arguments = new Bundle();
-		arguments.putString(fragment.ARG_URL, getIntent().getStringExtra(EXTRA_URL));
-		fragment.setArguments(arguments);
-		
-		getSupportFragmentManager()
-			.beginTransaction()
-			.add(R.id.web_fragment_placeholder, fragment)
-			.commit();
+		FragmentManager manager = getSupportFragmentManager();
+        
+        if (manager.findFragmentById(R.id.web_fragment_placeholder) == null) {
+			
+        	WebFragment fragment = new WebFragment();
+			Bundle arguments = new Bundle();
+			arguments.putString(fragment.ARG_URL, getIntent().getStringExtra(EXTRA_URL));
+			fragment.setArguments(arguments);
+			
+			manager
+				.beginTransaction()
+				.add(R.id.web_fragment_placeholder, fragment)
+				.commit();
+        }
 	}
 	
 }
