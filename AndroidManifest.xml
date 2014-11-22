@@ -15,26 +15,32 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+        
         <activity
-            android:name=".controller.WineActivity"
+            android:name="com.utad.baccus.controller.activity.WineActivity"
             android:label="@string/app_name" >
         </activity>
+        
         <activity
-            android:name=".controller.WebActivity"
+            android:name="com.utad.baccus.controller.activity.WebActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name" >
         </activity>
+        
         <activity
-            android:name=".controller.SettingsActivity" 
+            android:name="com.utad.baccus.controller.activity.SettingsActivity" 
             android:label="@string/app_name" >
         </activity>
-        <activity
-            android:name="com.utad.baccus.controller.WinehouseActivity" >
+        
+        <activity 
+            android:name="com.utad.baccus.controller.activity.WinehouseActivity" 
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
     </application>
 
 </manifest>

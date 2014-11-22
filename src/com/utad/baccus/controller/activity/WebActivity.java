@@ -1,4 +1,4 @@
-package com.utad.baccus.controller;
+package com.utad.baccus.controller.activity;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -13,6 +13,7 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
 import com.utad.baccus.R;
+import com.utad.baccus.controller.fragment.WebFragment;
 import com.utad.baccus.model.Wine;
 
 public class WebActivity extends ActionBarActivity {

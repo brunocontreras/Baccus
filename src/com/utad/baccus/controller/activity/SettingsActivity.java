@@ -1,4 +1,4 @@
-package com.utad.baccus.controller;
+package com.utad.baccus.controller.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.RadioGroup;
 
 import com.utad.baccus.R;
+import com.utad.baccus.controller.fragment.SettingsFragment;
 
 public class SettingsActivity extends FragmentActivity {
 	

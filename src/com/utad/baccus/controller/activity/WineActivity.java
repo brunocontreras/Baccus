@@ -1,4 +1,4 @@
-package com.utad.baccus.controller;
+package com.utad.baccus.controller.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,6 +17,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.utad.baccus.R;
+import com.utad.baccus.controller.fragment.WineFragment;
 import com.utad.baccus.model.Wine;
 
 
@@ -32,6 +33,7 @@ public class WineActivity extends ActionBarActivity {
         FragmentManager manager = getSupportFragmentManager();
         
         if (manager.findFragmentById(R.id.wine_fragment_placeholder) == null) {
+        	
 	        WineFragment fragment = new WineFragment();
 	        Bundle arguments = new Bundle();
 	        arguments.putSerializable(WineFragment.ARG_WINE, getIntent().getSerializableExtra(EXTRA_WINE));
