@@ -18,8 +18,6 @@ import com.utad.baccus.model.Wine;
 
 public class WebActivity extends ActionBarActivity {
 
-//	
-//	
 	public static final String EXTRA_URL = "URL";
 	
 	@Override

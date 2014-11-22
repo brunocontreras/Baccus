@@ -12,5 +12,7 @@
     <string name="gotoweb">Web</string>
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="title_activity_wine_house">WineHouseActivity</string>
+    <string name="prev">prev</string>
+    <string name="next">next</string>
 
 </resources>

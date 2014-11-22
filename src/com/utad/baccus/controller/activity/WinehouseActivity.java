@@ -2,12 +2,16 @@ package com.utad.baccus.controller.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBar.Tab;
 import android.support.v7.app.ActionBar.TabListener;
 import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.RemoteViews.ActionException;
 
 import com.utad.baccus.R;
 import com.utad.baccus.controller.adapter.WineFragmentAdapter;
@@ -16,19 +20,22 @@ public class WinehouseActivity extends ActionBarActivity {
 
 	private WineFragmentAdapter mAdapter = null;
 	private ActionBar mActionBar = null;
+	private ViewPager mPager = null;
+	
+	private static final int MENU_PREV = 0;
+	private static final int MENU_NEXT = 1;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_winehouse);
 		
-		final ViewPager pager = (ViewPager) findViewById(R.id.pager);
-		
+		mPager = (ViewPager) findViewById(R.id.pager);
 		mAdapter = new WineFragmentAdapter(getSupportFragmentManager());
 		mActionBar = getSupportActionBar();
 		
-		pager.setAdapter(mAdapter);
-		pager.setOnPageChangeListener(new OnPageChangeListener() {
+		mPager.setAdapter(mAdapter);
+		mPager.setOnPageChangeListener(new OnPageChangeListener() {
 			
 			@Override
 			public void onPageSelected(int index) {
@@ -53,7 +60,7 @@ public class WinehouseActivity extends ActionBarActivity {
 				
 				@Override
 				public void onTabSelected(Tab tab, FragmentTransaction trx) {
-					pager.setCurrentItem(tab.getPosition());
+					mPager.setCurrentItem(tab.getPosition());
 				}
 				
 				@Override
@@ -70,4 +77,44 @@ public class WinehouseActivity extends ActionBarActivity {
 		mActionBar.setIcon(mAdapter.getImage(index));
 		mActionBar.setSelectedNavigationItem(index);
 	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+
+		MenuItem prev = menu.add(Menu.NONE, MENU_PREV, 0, R.string.prev);
+		MenuItemCompat.setShowAsAction(prev, MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
+		
+		MenuItem next = menu.add(Menu.NONE, MENU_NEXT, 1, R.string.next);
+		MenuItemCompat.setShowAsAction(next, MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
+		
+		int index = mActionBar.getSelectedNavigationIndex();
+		next.setEnabled(index < mAdapter.getCount() - 1);
+		prev.setEnabled(index > 0);
+		
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		boolean defaultValue = super.onOptionsItemSelected(item);		
+		
+		switch (item.getItemId()) {
+			case MENU_PREV:			
+				if (mActionBar.getSelectedNavigationIndex() > 0) {
+					updateActionBar(mActionBar.getSelectedNavigationIndex() - 1);
+				}
+				return true;
+	
+			case MENU_NEXT:
+				if (mActionBar.getSelectedNavigationIndex() < mAdapter.getCount() - 1) {
+					updateActionBar(mActionBar.getSelectedNavigationIndex() + 1);
+				}
+				return true;
+				
+			default:
+				return defaultValue;
+		}
+	}	
+	
 }
