@@ -24,7 +24,7 @@
         <activity
             android:name="com.utad.baccus.controller.activity.WebActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/app_name" >
+            android:label="@string/gotoweb" >
         </activity>
         
         <activity
