@@ -87,4 +87,12 @@ public class Winehouse {
 	public int getWineCount() {
 		return mWines.size();
 	}
+	
+	public List<Wine> cloneWineList() {
+		List<Wine> copy = new LinkedList<Wine>();
+		for (Wine wine : mWines) {
+			copy.add(wine);
+		}
+		return copy;
+	}
 }

@@ -77,4 +77,11 @@ public class Wine implements Serializable {
 	public void addGrape(String grape) {
 		mGrapes.add(grape);
 	}
+
+	@Override
+	public String toString() {
+		return getName();
+	}
+	
+	
 }
