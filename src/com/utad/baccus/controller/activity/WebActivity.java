@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -39,6 +40,24 @@ public class WebActivity extends ActionBarActivity {
 				.add(R.id.web_fragment_placeholder, fragment)
 				.commit();
         }
+        
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		boolean defaultValue = super.onOptionsItemSelected(item);
+		
+		if (item.getItemId() == android.R.id.home) {
+			finish();
+			return true;
+		}
+		else {
+			return defaultValue;
+		}
+	}
+	
+	
 	
 }
