@@ -84,7 +84,7 @@ public class WineFragment extends Fragment {
 			public void onClick(View v) {
 				Intent webIntent = new Intent(getActivity(), WebActivity.class); 
 	    		webIntent.putExtra(WebActivity.EXTRA_URL, mWine.getURL());
-	    		startActivity(webIntent);			
+	    		startActivity(webIntent);
 			}
 		});
         

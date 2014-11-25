@@ -19,16 +19,16 @@ public class SettingsActivity extends FragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_settings_fragment_container);
+		setContentView(R.layout.activity_fragment_container);
 		
 		FragmentManager manager = getSupportFragmentManager();
         
-        if (manager.findFragmentById(R.id.wine_fragment_placeholder) == null) {
+        if (manager.findFragmentById(R.id.fragment_placeholder) == null) {
 			SettingsFragment fragment = new SettingsFragment();
 			
 			manager
 				.beginTransaction()
-				.add(R.id.settings_fragment_placeholder, fragment)
+				.add(R.id.fragment_placeholder, fragment)
 				.commit();
         }
 	}

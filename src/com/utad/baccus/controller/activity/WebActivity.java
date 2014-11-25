@@ -24,11 +24,11 @@ public class WebActivity extends ActionBarActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_web_fragment_container);
+		setContentView(R.layout.activity_fragment_container);
 
 		FragmentManager manager = getSupportFragmentManager();
         
-        if (manager.findFragmentById(R.id.web_fragment_placeholder) == null) {
+        if (manager.findFragmentById(R.id.fragment_placeholder) == null) {
 			
         	WebFragment fragment = new WebFragment();
 			Bundle arguments = new Bundle();
@@ -37,7 +37,7 @@ public class WebActivity extends ActionBarActivity {
 			
 			manager
 				.beginTransaction()
-				.add(R.id.web_fragment_placeholder, fragment)
+				.add(R.id.fragment_placeholder, fragment)
 				.commit();
         }
         

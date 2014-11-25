@@ -25,6 +25,8 @@ public class WinehouseActivity extends ActionBarActivity {
 	private static final int MENU_PREV = 0;
 	private static final int MENU_NEXT = 1;
 	
+	public static final String EXTRA_WINE_ID = "WINE_ID";
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -33,6 +35,7 @@ public class WinehouseActivity extends ActionBarActivity {
 		mPager = (ViewPager) findViewById(R.id.pager);
 		mAdapter = new WineFragmentAdapter(getSupportFragmentManager());
 		mActionBar = getSupportActionBar();
+		mActionBar.setDisplayHomeAsUpEnabled(true);
 		
 		mPager.setAdapter(mAdapter);
 		mPager.setOnPageChangeListener(new OnPageChangeListener() {
@@ -69,7 +72,9 @@ public class WinehouseActivity extends ActionBarActivity {
 			mActionBar.addTab(tab);
 		}
 		
-		updateActionBar(0);
+		int position = getIntent().getIntExtra(EXTRA_WINE_ID, 0);
+		
+		updateActionBar(position);
 	}
 	
 	public void updateActionBar(int index) {
@@ -100,6 +105,10 @@ public class WinehouseActivity extends ActionBarActivity {
 		boolean defaultValue = super.onOptionsItemSelected(item);		
 		
 		switch (item.getItemId()) {
+			case android.R.id.home:
+				finish();
+				return true;
+				
 			case MENU_PREV:			
 				if (mActionBar.getSelectedNavigationIndex() > 0) {
 					updateActionBar(mActionBar.getSelectedNavigationIndex() - 1);

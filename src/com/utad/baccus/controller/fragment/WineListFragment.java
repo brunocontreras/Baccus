@@ -1,5 +1,6 @@
 package com.utad.baccus.controller.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.utad.baccus.R;
+import com.utad.baccus.controller.activity.WinehouseActivity;
 import com.utad.baccus.model.Wine;
 import com.utad.baccus.model.Winehouse;
 
@@ -35,8 +37,10 @@ public class WineListFragment extends Fragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				
-				
+
+				Intent wineIntent = new Intent(getActivity(), WinehouseActivity.class);
+				wineIntent.putExtra(WinehouseActivity.EXTRA_WINE_ID, position);
+				startActivity(wineIntent);
 			}
 		});
 		
