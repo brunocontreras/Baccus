@@ -34,8 +34,6 @@ public class WinehouseActivity extends ActionBarActivity {
 		
 		mPager = (ViewPager) findViewById(R.id.pager);
 		mAdapter = new WineFragmentAdapter(getSupportFragmentManager());
-		mActionBar = getSupportActionBar();
-		mActionBar.setDisplayHomeAsUpEnabled(true);
 		
 		mPager.setAdapter(mAdapter);
 		mPager.setOnPageChangeListener(new OnPageChangeListener() {
@@ -51,7 +49,9 @@ public class WinehouseActivity extends ActionBarActivity {
 			@Override
 			public void onPageScrollStateChanged(int arg0) { }
 		});
-		
+
+		mActionBar = getSupportActionBar();
+		mActionBar.setDisplayHomeAsUpEnabled(true);
 		mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		for (int i = 0; i < mAdapter.getCount(); i++) {
 			Tab tab = mActionBar.newTab();
