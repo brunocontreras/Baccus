@@ -32,15 +32,15 @@ public class WineListFragment extends Fragment {
 				android.R.layout.simple_spinner_dropdown_item,
 				Winehouse.getInstance().cloneWineList()));
 		
+		
 		list.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-
-				Intent wineIntent = new Intent(getActivity(), WinehouseActivity.class);
-				wineIntent.putExtra(WinehouseActivity.EXTRA_WINE_ID, position);
-				startActivity(wineIntent);
+				Intent intent = new Intent(getActivity(), WinehouseActivity.class);
+				intent.putExtra(WinehouseActivity.EXTRA_WINE_INDEX, position);
+				startActivity(intent);
 			}
 		});
 		
