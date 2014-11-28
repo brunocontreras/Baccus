@@ -1,6 +1,5 @@
 package com.utad.baccus.controller.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,11 +12,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.utad.baccus.R;
-import com.utad.baccus.controller.activity.WinehouseActivity;
 import com.utad.baccus.model.Wine;
 import com.utad.baccus.model.Winehouse;
 
 public class WineListFragment extends Fragment {
+
+	private OnWineSelectedListener mOnWineSelectedListener = null;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater,
@@ -34,16 +34,22 @@ public class WineListFragment extends Fragment {
 		
 		
 		list.setOnItemClickListener(new OnItemClickListener() {
-
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				Intent intent = new Intent(getActivity(), WinehouseActivity.class);
-				intent.putExtra(WinehouseActivity.EXTRA_WINE_INDEX, position);
-				startActivity(intent);
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				if (mOnWineSelectedListener != null) {
+					mOnWineSelectedListener.onWineSelected(position);
+				}				
 			}
 		});
 		
 		return root;
-	}	
+	}
+	
+	public void setOnWineSelectedListener(OnWineSelectedListener onWineSelectedListener) {
+		mOnWineSelectedListener = onWineSelectedListener;
+	}
+	
+	public interface OnWineSelectedListener {
+		void onWineSelected(int index);
+	}
 }

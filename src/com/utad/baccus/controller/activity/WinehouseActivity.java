@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
+import android.view.MenuItem;
 
 import com.utad.baccus.R;
 import com.utad.baccus.controller.fragment.WinehouseFragment;
@@ -16,6 +17,8 @@ public class WinehouseActivity extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_fragment_container);
+		
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		
 		FragmentManager manager = getSupportFragmentManager();
 		if (manager.findFragmentById(R.id.fragment_placeholder) == null) {
@@ -116,30 +119,18 @@ public class WinehouseActivity extends ActionBarActivity {
 //		return true;
 //	}
 //
-//	@Override
-//	public boolean onOptionsItemSelected(MenuItem item) {
-//		boolean defaultValue = super.onOptionsItemSelected(item);		
-//		
-//		switch (item.getItemId()) {
-//			case android.R.id.home:
-//				finish();
-//				return true;
-//				
-//			case MENU_PREV:			
-//				if (mActionBar.getSelectedNavigationIndex() > 0) {
-//					updateActionBar(mActionBar.getSelectedNavigationIndex() - 1);
-//				}
-//				return true;
-//	
-//			case MENU_NEXT:
-//				if (mActionBar.getSelectedNavigationIndex() < mAdapter.getCount() - 1) {
-//					updateActionBar(mActionBar.getSelectedNavigationIndex() + 1);
-//				}
-//				return true;
-//				
-//			default:
-//				return defaultValue;
-//		}
-//	}	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		boolean defaultValue = super.onOptionsItemSelected(item);		
+		
+		switch (item.getItemId()) {
+			case android.R.id.home:
+				finish();
+				return true;
+				
+			default:
+				return defaultValue;
+		}
+	}	
 	
 }

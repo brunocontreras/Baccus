@@ -62,14 +62,18 @@ public class WinehouseFragment extends Fragment {
 		mActionBar = ((ActionBarActivity)getActivity()).getSupportActionBar();
 		
 		int position = getArguments().getInt(ARG_WINE_INDEX, 0);
-		updateActionBar(position);
-		mPager.setCurrentItem(position);
+		showWine(position);
 		
 		return root;
 	}
 	
 	public void updateActionBar(int index) {
 		mActionBar.setSubtitle(mAdapter.getPageTitle(index));
+	}
+	
+	public void showWine(int index) {
+		updateActionBar(index);
+		mPager.setCurrentItem(index);
 	}
 
 	@Override
@@ -91,23 +95,18 @@ public class WinehouseFragment extends Fragment {
 		boolean defaultValue = super.onOptionsItemSelected(item);		
 		
 		switch (item.getItemId()) {
-			case android.R.id.home:
-				getActivity().finish();
-				return true;
-				
+
 			case MENU_PREV:
 				if (mPager.getCurrentItem() > 0) {
 					int wineIndex = mPager.getCurrentItem() - 1;
-					updateActionBar(wineIndex);
-					mPager.setCurrentItem(wineIndex);
+					showWine(wineIndex);
 				}
 				return true;
 	
 			case MENU_NEXT:
 				if (mPager.getCurrentItem() < mAdapter.getCount() - 1) {
 					int wineIndex = mPager.getCurrentItem() + 1;
-					updateActionBar(wineIndex);
-					mPager.setCurrentItem(wineIndex);
+					showWine(wineIndex);
 				}
 				return true;
 				

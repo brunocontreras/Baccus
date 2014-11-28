@@ -1,21 +1,13 @@
 package com.utad.baccus.controller.activity;
 
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.ProgressBar;
 
 import com.utad.baccus.R;
 import com.utad.baccus.controller.fragment.WebFragment;
-import com.utad.baccus.model.Wine;
 
 public class WebActivity extends ActionBarActivity {
 
@@ -32,7 +24,7 @@ public class WebActivity extends ActionBarActivity {
 			
         	WebFragment fragment = new WebFragment();
 			Bundle arguments = new Bundle();
-			arguments.putString(fragment.ARG_URL, getIntent().getStringExtra(EXTRA_URL));
+			arguments.putString(WebFragment.ARG_URL, getIntent().getStringExtra(EXTRA_URL));
 			fragment.setArguments(arguments);
 			
 			manager

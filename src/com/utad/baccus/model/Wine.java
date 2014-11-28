@@ -5,7 +5,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Wine implements Serializable {
-	
+
+	private static final long serialVersionUID = 1L;
 	private String mName;
 	private String mType;
 	private String mURL;

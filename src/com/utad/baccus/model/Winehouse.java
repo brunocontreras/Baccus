@@ -1,8 +1,8 @@
 package com.utad.baccus.model;
 
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+
 import com.utad.baccus.R;
 
 public class Winehouse {
@@ -28,7 +28,7 @@ public class Winehouse {
 	
 	public Winehouse() {
 
-		mWines = new LinkedList();
+		mWines = new LinkedList<Wine>();
 		
 		// Creamos los modelos
 		Wine bembibre = new Wine("Bembibre", 

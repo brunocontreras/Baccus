@@ -1,12 +1,8 @@
 package com.utad.baccus.controller.activity;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.view.View;
-import android.widget.RadioGroup;
 
 import com.utad.baccus.R;
 import com.utad.baccus.controller.fragment.SettingsFragment;
