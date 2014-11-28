@@ -1,11 +1,17 @@
 package com.utad.baccus.controller.fragment;
 
+import java.io.File;
+import java.io.FileOutputStream;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
+import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.provider.ContactsContract.Directory;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -23,7 +29,6 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.utad.baccus.R;
-import com.utad.baccus.controller.activity.SettingsActivity;
 import com.utad.baccus.controller.activity.WebActivity;
 import com.utad.baccus.model.Wine;
 
@@ -64,7 +69,12 @@ public class WineFragment extends Fragment {
         txt_wineNotes.setText(mWine.getNotes());
         
         mWineImage = (ImageView) mRoot.findViewById(R.id.wine_image);
-        mWineImage.setImageResource(mWine.getImage());
+        String imagePath = getActivity().getCacheDir().getAbsolutePath() + File.separator + mWine.getId();
+        File imageFile = new File(imagePath);
+        if (!imageFile.exists()) {
+        	
+        }
+        mWineImage.setImageDrawable(Drawable.createFromPath(imagePath));
         
         // Creating grape texts
         LinearLayout grapesContainer = (LinearLayout) mRoot.findViewById(R.id.grapes);
