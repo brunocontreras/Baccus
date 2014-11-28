@@ -1,6 +1,8 @@
 package com.utad.baccus.controller.fragment;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
@@ -17,6 +19,7 @@ import android.view.ViewGroup;
 
 import com.utad.baccus.R;
 import com.utad.baccus.controller.adapter.WineFragmentAdapter;
+import com.utad.baccus.model.Constants;
 
 public class WinehouseFragment extends Fragment {
 
@@ -49,7 +52,7 @@ public class WinehouseFragment extends Fragment {
 			
 			@Override
 			public void onPageSelected(int index) {
-				updateActionBar(index);
+				updateActionBarAndSaveLastWine(index);
 			}
 			
 			@Override
@@ -67,12 +70,20 @@ public class WinehouseFragment extends Fragment {
 		return root;
 	}
 	
-	public void updateActionBar(int index) {
+	public void updateActionBarAndSaveLastWine(int index) {
 		mActionBar.setSubtitle(mAdapter.getPageTitle(index));
+		saveLastWine();
+	}
+
+	private void saveLastWine() {
+		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+		pref.edit()
+			.putInt(Constants.PREF_LAST_WINE, mPager.getCurrentItem())
+			.commit();
 	}
 	
 	public void showWine(int index) {
-		updateActionBar(index);
+		updateActionBarAndSaveLastWine(index);
 		mPager.setCurrentItem(index);
 	}
 

@@ -1,6 +1,9 @@
 package com.utad.baccus.controller.fragment;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -82,9 +85,25 @@ public class WineFragment extends Fragment {
         webButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent webIntent = new Intent(getActivity(), WebActivity.class); 
-	    		webIntent.putExtra(WebActivity.EXTRA_URL, mWine.getURL());
-	    		startActivity(webIntent);
+				
+				AlertDialog.Builder alert = new Builder(getActivity());
+				alert.setTitle("¿Ande vas?");
+				alert.setMessage("Ojo-cuidado, que nos vamos fuera de la aplicación, tú verás lo que haces.");
+				alert.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						Intent webIntent = new Intent(getActivity(), WebActivity.class); 
+			    		webIntent.putExtra(WebActivity.EXTRA_URL, mWine.getURL());
+			    		startActivity(webIntent);
+					}
+				});
+				alert.setNegativeButton("No",  new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+					}
+				});
+				alert.show();
 			}
 		});
         
@@ -108,8 +127,9 @@ public class WineFragment extends Fragment {
 		boolean defaultValue = super.onOptionsItemSelected(item);
 		
 		if (item.getItemId() == R.id.action_settings) {
-			Intent settingsIntent = new Intent(getActivity(), SettingsActivity.class);
-			startActivityForResult(settingsIntent, SettingsActivity.REQUEST_SELECT_SCALE_TYPE);
+			SettingsFragment dialog = new SettingsFragment();
+			dialog.setTargetFragment(this, SettingsFragment.REQUEST_SELECT_SCALE_TYPE);
+			dialog.show(getFragmentManager(), null);
 			return true;
 		}
 		else {
@@ -121,7 +141,7 @@ public class WineFragment extends Fragment {
 	public void onActivityResult(int requestCode, int result, Intent intent) {
 		super.onActivityResult(requestCode, result, intent);
 		
-		if (requestCode == SettingsActivity.REQUEST_SELECT_SCALE_TYPE && result == Activity.RESULT_OK) {
+		if (requestCode == SettingsFragment.REQUEST_SELECT_SCALE_TYPE && result == Activity.RESULT_OK) {
 			int optionSelected = intent.getIntExtra(SettingsFragment.OPTION_SELECTED, -1); 
 			if (optionSelected != -1 && optionSelected == SettingsFragment.OPTION_NORMAL) {
 				mWineImage.setScaleType(ScaleType.FIT_CENTER);

@@ -6,8 +6,8 @@
 
     <RadioGroup
         android:id="@+id/radio_options"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_width="200dp"
+        android:layout_height="200dp" >
 
         <RadioButton
             android:id="@+id/radio_normal"
@@ -23,26 +23,5 @@
             android:text="Estirado" />
 
     </RadioGroup>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center" >
-
-        <Button
-            android:id="@+id/cancel_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="cancel"
-            android:text="@android:string/cancel" />
-
-        <Button
-            android:id="@+id/save_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="save"
-            android:text="@android:string/ok" />
-
-    </LinearLayout>
 
 </LinearLayout>

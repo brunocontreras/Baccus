@@ -1,65 +1,57 @@
 package com.utad.baccus.controller.fragment;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.RadioGroup;
 
 import com.utad.baccus.R;
 
-public class SettingsFragment extends Fragment implements OnClickListener {
+public class SettingsFragment extends DialogFragment implements android.content.DialogInterface.OnClickListener {
 
+	public static final int REQUEST_SELECT_SCALE_TYPE = 0;
 	public static final String OPTION_SELECTED = "OPTION_SELECTED";
 	public static final int OPTION_NORMAL = 0;
 	public static final int OPTION_FIT = 1;
 	protected View mRoot = null;
 	
-	@Override
-	public View onCreateView(LayoutInflater inflater,
-			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		super.onCreateView(inflater, container, savedInstanceState);
-		mRoot = inflater.inflate(R.layout.fragment_settings, container, false);
+	@SuppressLint("InflateParams") @Override
+	public Dialog onCreateDialog(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
 		
-		Button cancelButton = (Button) mRoot.findViewById(R.id.cancel_button);
-		cancelButton.setOnClickListener(this);
+		AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
 		
-		Button saveButton = (Button) mRoot.findViewById(R.id.save_button);
-		saveButton.setOnClickListener(this);
-				
-		return mRoot;
-	}
-
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.cancel_button:
-			cancel();
-			break;
-		case R.id.save_button:
-			save();
-			break;
-		default:
-			break;
-		}
+		mRoot = getActivity().getLayoutInflater().inflate(R.layout.fragment_settings, null);
+		dialog.setTitle(R.string.action_settings);
+		dialog.setView(mRoot);
+		dialog.setPositiveButton(android.R.string.ok, this);
+		dialog.setNegativeButton(android.R.string.cancel, this);
+		
+		return dialog.create();
 	}
 	
 	public void cancel() {
-		Activity activity = getActivity();
-		activity.setResult(Activity.RESULT_CANCELED);
-		activity.finish();
+		Fragment targetFragment = getTargetFragment();
+		if (targetFragment == null) {
+			Activity activity = getActivity();
+			activity.setResult(Activity.RESULT_CANCELED);
+			activity.finish();
+		}
+		else {
+			targetFragment.onActivityResult(getTargetRequestCode(), Activity.RESULT_CANCELED, null);
+		}
 	}
 	
 	public void save() {
 		Activity activity = getActivity();
-		Intent intent = activity.getIntent();
-		
+		Intent intent = new Intent();
 		RadioGroup radios = (RadioGroup) mRoot.findViewById(R.id.radio_options);
 		
 		if (radios.getCheckedRadioButtonId() == R.id.radio_normal) {
@@ -68,7 +60,30 @@ public class SettingsFragment extends Fragment implements OnClickListener {
 		else {
 			intent.putExtra(OPTION_SELECTED, OPTION_FIT);
 		}
-		activity.setResult(Activity.RESULT_OK, intent);
-		activity.finish();
+		
+		Fragment targetFragment = getTargetFragment();
+		if (targetFragment == null) {
+			activity.setResult(Activity.RESULT_OK, intent);
+			activity.finish();
+		}
+		else {
+			targetFragment.onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, intent);
+		}
+	}
+
+	@Override
+	public void onClick(DialogInterface dialog, int which) {
+		switch (which) {
+			case DialogInterface.BUTTON_POSITIVE:
+				save();
+				break;
+	
+			case DialogInterface.BUTTON_NEGATIVE:
+				cancel();
+				break;
+				
+			default:
+				break;
+		}
 	}
 }

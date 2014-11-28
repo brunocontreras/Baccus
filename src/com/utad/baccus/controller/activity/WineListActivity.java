@@ -1,15 +1,17 @@
 package com.utad.baccus.controller.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 
 import com.utad.baccus.R;
 import com.utad.baccus.controller.fragment.WineListFragment;
 import com.utad.baccus.controller.fragment.WineListFragment.OnWineSelectedListener;
 import com.utad.baccus.controller.fragment.WinehouseFragment;
+import com.utad.baccus.model.Constants;
 
 public class WineListActivity extends ActionBarActivity implements OnWineSelectedListener {
 	
@@ -19,13 +21,14 @@ public class WineListActivity extends ActionBarActivity implements OnWineSelecte
 		setContentView(R.layout.activity_wine_list);
 		
 		FragmentManager manager = getSupportFragmentManager();
-		FragmentTransaction transaction = manager.beginTransaction();
 		
         if (findViewById(R.id.list_fragment) != null) { 
         	WineListFragment wineListFragment = (WineListFragment) manager.findFragmentById(R.id.list_fragment);
         	if (wineListFragment == null) {
         		wineListFragment = new WineListFragment();
-        		transaction.add(R.id.list_fragment, wineListFragment);
+        		manager.beginTransaction()
+        			.add(R.id.list_fragment, wineListFragment)
+        			.commit();
         	}
         	wineListFragment.setOnWineSelectedListener(this);
         }
@@ -35,14 +38,15 @@ public class WineListActivity extends ActionBarActivity implements OnWineSelecte
 	        	WinehouseFragment fragment = new WinehouseFragment();
 	        	
 	        	Bundle arguments = new Bundle();
-	        	arguments.putInt(WinehouseFragment.ARG_WINE_INDEX, 0);
+	        	SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
+	        	arguments.putInt(WinehouseFragment.ARG_WINE_INDEX, pref.getInt(Constants.PREF_LAST_WINE, 0));
 	        	fragment.setArguments(arguments);
 	        	
-	        	transaction.add(R.id.winehouse_fragment, fragment);
+	        	manager.beginTransaction()
+	        		.add(R.id.winehouse_fragment, fragment)
+	        		.commit();
 	        }
         }
-        
-        transaction.commit();
 	}
 
 	@Override

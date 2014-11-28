@@ -8,9 +8,6 @@ import com.utad.baccus.R;
 import com.utad.baccus.controller.fragment.SettingsFragment;
 
 public class SettingsActivity extends FragmentActivity {
-	
-	public static final int REQUEST_SELECT_SCALE_TYPE = 0;
-	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
