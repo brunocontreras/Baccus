@@ -14,5 +14,9 @@
     <string name="title_activity_wine_house">WineHouseActivity</string>
     <string name="prev">prev</string>
     <string name="next">next</string>
+    <string name="wine_name_title">Nombre</string>
+    <string name="wine_type_title">Tipo</string>
+    <string name="wine_winehouse_title">Bodega</string>
+    <string name="wine_rating_title">Valoración</string>
 
 </resources>

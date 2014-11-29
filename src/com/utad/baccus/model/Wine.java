@@ -8,13 +8,9 @@ import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
-import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Build;
-import android.os.StrictMode;
 import android.util.Log;
 
 public class Wine implements Serializable {
@@ -33,14 +29,14 @@ public class Wine implements Serializable {
 
 	
 	public Wine(String id, String name, String type, String uRL, String wineHouse,
-			int image, int rating, String notes, String imageURL) {
+			int rating, String notes, String imageURL) {
 		super();
 		mId = id;
 		mName = name;
 		mType = type;
 		mURL = uRL;
 		mWineHouse = wineHouse;
-		mImage = image;
+//		mImage = image;
 		mRating = rating;
 		mGrapes = new LinkedList<String>();
 		mNotes = notes;
@@ -112,19 +108,13 @@ public class Wine implements Serializable {
 		return getBitmapFromURL(context, mImageURL);
 	}
 	
-	@TargetApi(Build.VERSION_CODES.GINGERBREAD) @SuppressLint("NewApi")
 	public Bitmap getBitmapFromURL(Context context, String url) {
 		File imageFile = new File(context.getCacheDir(), getId());
 		
 		if (imageFile.exists()) {
 			return BitmapFactory.decodeFile(imageFile.getAbsolutePath());
 		}
-		
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-			StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-			StrictMode.setThreadPolicy(policy);
-		}
-		
+
 		InputStream in = null;
 		try {
 			in = new java.net.URL(url).openStream();

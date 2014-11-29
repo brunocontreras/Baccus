@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -24,7 +25,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -113,6 +113,9 @@ public class WineFragment extends Fragment {
         			LinearLayout.LayoutParams.MATCH_PARENT,
         			LinearLayout.LayoutParams.WRAP_CONTENT);
         	text.setLayoutParams(params);
+        	
+        	text.setTextColor(Color.WHITE);
+        	text.setTextSize(getResources().getDimension(R.dimen.baccus_text_size) / getResources().getDisplayMetrics().density);
         	grapesContainer.addView(text);
         }
         

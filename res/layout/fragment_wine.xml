@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FF0066"
+    android:background="#444"
     android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -30,8 +30,7 @@
 	            android:layout_height="match_parent"
 	            android:contentDescription="@string/wine_description"
 	            android:scaleType="fitCenter"
-	            android:layout_gravity="center"
-	            android:src="@drawable/vegaval" />
+	            android:layout_gravity="center" />
 	        
 	        <ProgressBar 
 	            android:id="@+id/loading"
@@ -49,34 +48,62 @@
             android:orientation="vertical" >
 
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/wine_name_title"
+                style="@style/BaccusText.Title" />
+            
+            <TextView
                 android:id="@+id/wine_name"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                style="@style/BaccusText.Feature" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/wine_type_title"
+                style="@style/BaccusText.Title" />
+            
             <TextView
                 android:id="@+id/wine_type"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                style="@style/BaccusText.Feature" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/wine_winehouse_title"
+                style="@style/BaccusText.Title" />
+            
             <TextView
                 android:id="@+id/winehouse"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                style="@style/BaccusText.Feature" />
 
+            <TextView
+                android:id="@+id/wine_rating_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/wine_rating_title"
+                style="@style/BaccusText.Title" />
+            
             <LinearLayout
                 android:id="@+id/layaout_stars_web"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" >
-
+                
                 <RatingBar
                     android:id="@+id/rating"
-                    style="?android:attr/ratingBarStyleSmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:isIndicator="true"
                     android:numStars="5"
-                    android:stepSize="1" />
+                    android:stepSize="1"
+                    style="@style/WineRatingBar" />
 
                 <Button
                     android:id="@+id/btn_gotoweb"
@@ -91,7 +118,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="@string/grapes_list_header"
-                android:textStyle="bold" />
+                style="@style/BaccusText.Title" />
 
             <LinearLayout
                 android:id="@+id/grapes"
@@ -112,7 +139,7 @@
             android:id="@+id/wine_notes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/white" />
+            style="@style/BaccusText" />
     </ScrollView>
 
 </LinearLayout>

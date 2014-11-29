@@ -60,7 +60,7 @@ public class Winehouse {
 					int rating = jsonWine.getInt("rating");
 					String notes = jsonWine.getString("notes");
 					
-					Wine wine = new Wine(id, name, type, url, winehouse, R.drawable.vegaval, rating, notes, imageUrl);
+					Wine wine = new Wine(id, name, type, url, winehouse, rating, notes, imageUrl);
 					
 				    JSONArray jsonGrapes = jsonWine.getJSONArray("grapes");
 				    for (int j = 0; j < jsonGrapes.length(); j++) {
