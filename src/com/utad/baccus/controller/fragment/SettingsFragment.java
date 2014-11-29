@@ -6,13 +6,17 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RadioGroup;
 
 import com.utad.baccus.R;
+import com.utad.baccus.model.Constants;
 
 public class SettingsFragment extends DialogFragment implements android.content.DialogInterface.OnClickListener {
 
@@ -34,6 +38,16 @@ public class SettingsFragment extends DialogFragment implements android.content.
 		dialog.setPositiveButton(android.R.string.ok, this);
 		dialog.setNegativeButton(android.R.string.cancel, this);
 		
+		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+    	ImageView.ScaleType scaleType = ImageView.ScaleType.valueOf(pref.getString(Constants.PREF_SCALE_TYPE, ImageView.ScaleType.FIT_CENTER.toString()));
+    	RadioGroup radios = (RadioGroup) mRoot.findViewById(R.id.radio_options);
+    	if (scaleType.equals(ImageView.ScaleType.FIT_CENTER)) {
+    		radios.check(R.id.radio_normal);
+    	}
+    	else {
+    		radios.check(R.id.radio_fit);
+    	}
+		
 		return dialog.create();
 	}
 	
@@ -52,13 +66,21 @@ public class SettingsFragment extends DialogFragment implements android.content.
 	public void save() {
 		Activity activity = getActivity();
 		Intent intent = new Intent();
+		
 		RadioGroup radios = (RadioGroup) mRoot.findViewById(R.id.radio_options);
+		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getActivity());
 		
 		if (radios.getCheckedRadioButtonId() == R.id.radio_normal) {
 			intent.putExtra(OPTION_SELECTED, OPTION_NORMAL);
+			pref.edit()
+				.putString(Constants.PREF_SCALE_TYPE, ImageView.ScaleType.FIT_CENTER.toString())
+				.commit();
 		}
 		else {
 			intent.putExtra(OPTION_SELECTED, OPTION_FIT);
+			pref.edit()
+				.putString(Constants.PREF_SCALE_TYPE, ImageView.ScaleType.FIT_XY.toString())
+				.commit();
 		}
 		
 		Fragment targetFragment = getTargetFragment();

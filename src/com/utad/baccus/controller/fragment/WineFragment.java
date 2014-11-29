@@ -1,17 +1,13 @@
 package com.utad.baccus.controller.fragment;
 
-import java.io.File;
-import java.io.FileOutputStream;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
-import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.provider.ContactsContract.Directory;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -30,6 +26,7 @@ import android.widget.TextView;
 
 import com.utad.baccus.R;
 import com.utad.baccus.controller.activity.WebActivity;
+import com.utad.baccus.model.Constants;
 import com.utad.baccus.model.Wine;
 
 public class WineFragment extends Fragment {
@@ -69,12 +66,15 @@ public class WineFragment extends Fragment {
         txt_wineNotes.setText(mWine.getNotes());
         
         mWineImage = (ImageView) mRoot.findViewById(R.id.wine_image);
-        String imagePath = getActivity().getCacheDir().getAbsolutePath() + File.separator + mWine.getId();
-        File imageFile = new File(imagePath);
-        if (!imageFile.exists()) {
-        	
+        mWineImage.setImageBitmap(mWine.getBitmap(getActivity()));
+        if (savedInstanceState != null && savedInstanceState.containsKey(CURRENT_SCALETYPE)) {
+        	mWineImage.setScaleType((ScaleType) savedInstanceState.getSerializable(CURRENT_SCALETYPE));
         }
-        mWineImage.setImageDrawable(Drawable.createFromPath(imagePath));
+        else {
+        	SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        	ImageView.ScaleType scaleType = ImageView.ScaleType.valueOf(pref.getString(Constants.PREF_SCALE_TYPE, ImageView.ScaleType.FIT_CENTER.toString()));
+        	mWineImage.setScaleType(scaleType);
+        }
         
         // Creating grape texts
         LinearLayout grapesContainer = (LinearLayout) mRoot.findViewById(R.id.grapes);
@@ -116,11 +116,6 @@ public class WineFragment extends Fragment {
 				alert.show();
 			}
 		});
-        
-        // Carga la web del modelo
-    	if (savedInstanceState != null && savedInstanceState.containsKey(CURRENT_SCALETYPE)) {
-        	mWineImage.setScaleType((ScaleType) savedInstanceState.getSerializable(CURRENT_SCALETYPE));
-        }
         
 		return mRoot;
 	}

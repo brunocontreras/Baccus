@@ -1,5 +1,7 @@
 package com.utad.baccus.model;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
@@ -8,6 +10,7 @@ import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
@@ -105,21 +108,31 @@ public class Wine implements Serializable {
 		mImageURL = imageURL;
 	}
 	
-	public Bitmap getBitmap() {
-		return getBitmapFromURL(mImageURL);
+	public Bitmap getBitmap(Context context) {
+		return getBitmapFromURL(context, mImageURL);
 	}
 	
 	@TargetApi(Build.VERSION_CODES.GINGERBREAD) @SuppressLint("NewApi")
-	public Bitmap getBitmapFromURL(String url) {
+	public Bitmap getBitmapFromURL(Context context, String url) {
+		File imageFile = new File(context.getCacheDir(), getId());
+		
+		if (imageFile.exists()) {
+			return BitmapFactory.decodeFile(imageFile.getAbsolutePath());
+		}
 		
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 			StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 			StrictMode.setThreadPolicy(policy);
 		}
+		
 		InputStream in = null;
 		try {
 			in = new java.net.URL(url).openStream();
-			return BitmapFactory.decodeStream(in);
+			Bitmap bmp = BitmapFactory.decodeStream(in);
+			FileOutputStream fos = new FileOutputStream(imageFile);
+			bmp.compress(Bitmap.CompressFormat.PNG, 90, fos);
+			fos.close();
+			return bmp;
 		} catch (Exception e) {
 			Log.e("Baccus", "Error downloading image", e);
 			return null;
