@@ -36,5 +36,17 @@
         <item name="android:minHeight">32dip</item>
         <item name="android:maxHeight">32dip</item>
     </style>
+    
+    <style name="WineRow">
+        
+    </style>
+    
+    <style name="WineRow.Title">
+        <item name="android:textSize">@dimen/baccus_title_text_size</item>
+    </style>
+    
+    <style name="WineRow.Subtitle">
+        <item name="android:textSize">@dimen/baccus_text_size</item>
+    </style>
 
 </resources>
