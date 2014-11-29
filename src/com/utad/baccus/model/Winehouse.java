@@ -10,18 +10,12 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
-import android.os.Build;
-import android.os.StrictMode;
-
 import com.utad.baccus.R;
 
-@TargetApi(Build.VERSION_CODES.GINGERBREAD) @SuppressLint("NewApi") public class Winehouse {
+public class Winehouse {
 
 	private static Winehouse sInstance = null;
 	private static final String WINES_URL = "http://baccusapp.herokuapp.com/wines";
-	
 	private List<Wine> mWines;
 
 	public List<Wine> getList() {
@@ -38,15 +32,9 @@ import com.utad.baccus.R;
 	public void setList(List<Wine> mWines) {
 		this.mWines = mWines;
 	}
-	
-	@TargetApi(Build.VERSION_CODES.GINGERBREAD) @SuppressLint("NewApi") 
+
 	public Winehouse() {
 		try {
-			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-				StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-				StrictMode.setThreadPolicy(policy);
-			}
-			
 			URLConnection conn = new URL(WINES_URL).openConnection();
 			BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 			String line = null;
@@ -82,6 +70,8 @@ import com.utad.baccus.R;
 					mWines.add(wine);
 				}
 			}
+			
+			Thread.sleep(5000);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}

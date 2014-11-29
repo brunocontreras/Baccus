@@ -1,10 +1,13 @@
 package com.utad.baccus.controller.fragment;
 
+import android.app.ProgressDialog;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
@@ -45,9 +48,37 @@ public class WinehouseFragment extends Fragment {
 		View root = inflater.inflate(R.layout.fragment_winehouse, container, false);
 		
 		mPager = (ViewPager) root.findViewById(R.id.pager);
-		mAdapter = new WineFragmentAdapter(getFragmentManager());
 		
-		mPager.setAdapter(mAdapter);
+		new AsyncTask<FragmentManager, Void, WineFragmentAdapter>() {
+
+			private ProgressDialog progressDialog = null;
+			
+			@Override
+			protected void onPreExecute() {
+				super.onPreExecute();
+				progressDialog = new ProgressDialog(getActivity());
+				progressDialog.setTitle("Descargando vinos...");
+				progressDialog.setIndeterminate(true);
+				progressDialog.setCancelable(false);
+				progressDialog.show();
+			}
+			
+			@Override
+			protected WineFragmentAdapter doInBackground(FragmentManager... params) {
+				return new WineFragmentAdapter(params[0]);
+			}
+
+			@Override
+			protected void onPostExecute(WineFragmentAdapter result) {
+				super.onPostExecute(result);
+				mAdapter = result;
+				mPager.setAdapter(mAdapter);
+				int position = getArguments().getInt(ARG_WINE_INDEX, 0);
+				showWine(position);
+				progressDialog.dismiss();
+			}
+		}.execute(getFragmentManager());
+
 		mPager.setOnPageChangeListener(new OnPageChangeListener() {
 			
 			@Override
@@ -63,10 +94,7 @@ public class WinehouseFragment extends Fragment {
 		});
 
 		mActionBar = ((ActionBarActivity)getActivity()).getSupportActionBar();
-		
-		int position = getArguments().getInt(ARG_WINE_INDEX, 0);
-		showWine(position);
-		
+
 		return root;
 	}
 	
@@ -90,15 +118,18 @@ public class WinehouseFragment extends Fragment {
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
-		MenuItem prev = menu.add(Menu.NONE, MENU_PREV, 0, R.string.prev);
-		MenuItemCompat.setShowAsAction(prev, MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
+		if (mAdapter != null) {
+			MenuItem prev = menu.add(Menu.NONE, MENU_PREV, 0, R.string.prev);
+			MenuItemCompat.setShowAsAction(prev, MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
+			
+			MenuItem next = menu.add(Menu.NONE, MENU_NEXT, 1, R.string.next);
+			MenuItemCompat.setShowAsAction(next, MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
+			
+			int index = mPager.getCurrentItem();		
 		
-		MenuItem next = menu.add(Menu.NONE, MENU_NEXT, 1, R.string.next);
-		MenuItemCompat.setShowAsAction(next, MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
-		
-		int index = mPager.getCurrentItem();
-		next.setEnabled(index < mAdapter.getCount() - 1);
-		prev.setEnabled(index > 0);
+			next.setEnabled(index < mAdapter.getCount() - 1);
+			prev.setEnabled(index > 0);
+		}
 	}
 
 	@Override
