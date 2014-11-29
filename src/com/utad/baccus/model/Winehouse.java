@@ -70,8 +70,6 @@ public class Winehouse {
 					mWines.add(wine);
 				}
 			}
-			
-			Thread.sleep(5000);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}

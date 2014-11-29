@@ -6,7 +6,10 @@ import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -21,6 +24,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -66,7 +70,31 @@ public class WineFragment extends Fragment {
         txt_wineNotes.setText(mWine.getNotes());
         
         mWineImage = (ImageView) mRoot.findViewById(R.id.wine_image);
-        mWineImage.setImageBitmap(mWine.getBitmap(getActivity()));
+        mWineImage.setVisibility(View.INVISIBLE);
+        
+        final Handler dowloadImageHandler = new Handler() {
+			@Override
+			public void handleMessage(Message msg) {
+				super.handleMessage(msg);
+				if (mWineImage != null) {
+					mWineImage.setImageBitmap((Bitmap)msg.obj);
+					mWineImage.setVisibility(View.VISIBLE);
+					mRoot.findViewById(R.id.loading).setVisibility(View.GONE);
+				}
+			}
+        };
+        
+        Thread downloader = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				Message msg = new Message();
+				msg.obj = mWine.getBitmap(getActivity());
+				dowloadImageHandler.sendMessage(msg);				
+			}
+		});
+        
+        downloader.start();
+        
         if (savedInstanceState != null && savedInstanceState.containsKey(CURRENT_SCALETYPE)) {
         	mWineImage.setScaleType((ScaleType) savedInstanceState.getSerializable(CURRENT_SCALETYPE));
         }
