@@ -38,7 +38,8 @@
     </style>
     
     <style name="WineRow">
-        
+        <item name="android:textColor">#333</item>
+        <item name="android:paddingLeft">10dp</item>
     </style>
     
     <style name="WineRow.Title">
@@ -46,7 +47,8 @@
     </style>
     
     <style name="WineRow.Subtitle">
-        <item name="android:textSize">@dimen/baccus_text_size</item>
+        <item name="android:textSize">@dimen/baccus_subtitle_text_size</item>
+        <item name="android:textStyle">italic</item>
     </style>
 
 </resources>

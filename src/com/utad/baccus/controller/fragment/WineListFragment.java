@@ -28,7 +28,6 @@ import com.utad.baccus.model.Wine;
 import com.utad.baccus.model.Winehouse;
 
 public class WineListFragment extends Fragment {
-
 	private OnWineSelectedListener mOnWineSelectedListener = null;
 
 	@Override
@@ -37,12 +36,11 @@ public class WineListFragment extends Fragment {
 		super.onCreateView(inflater, container, savedInstanceState);
 		
 		View root = inflater.inflate(R.layout.fragment_wine_list, container, false);
+		
 		final ListView list = (ListView) root.findViewById(R.id.wine_list);
 		
 		AsyncTask<Void, Void, List<Wine>> asyncTask = new AsyncTask<Void, Void, List<Wine>>() {
-			
-			private ProgressDialog progressDialog = null;
-			
+			private ProgressDialog progressDialog = null;			
 			@Override
 			protected void onPreExecute() {
 				super.onPreExecute();
@@ -69,6 +67,7 @@ public class WineListFragment extends Fragment {
 				progressDialog.dismiss();
 			}
 		};
+		
 		asyncTask.execute();
 		
 		list.setOnItemClickListener(new OnItemClickListener() {
@@ -91,7 +90,7 @@ public class WineListFragment extends Fragment {
 		void onWineSelected(int index);
 	}
 	
-	class WineRowAdapter extends ArrayAdapter {
+	private class WineRowAdapter extends ArrayAdapter<Wine> {
 		
 		private int mLayout;
 		
@@ -101,45 +100,47 @@ public class WineListFragment extends Fragment {
 		}
 
 		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			super.getView(position, convertView, parent);
-			LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			View wineRow = inflater.inflate(mLayout,  parent, false);
-			
-			final ImageView wineImage = (ImageView) wineRow.findViewById(R.id.wine_image);
-			wineImage.setVisibility(View.INVISIBLE);
-			
-			final Handler dowloadImageHandler = new Handler() {
+		public View getView(final int position, View convertView, ViewGroup parent) {
+			LayoutInflater inflater = (LayoutInflater) getContext()
+					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		    final View wineRow = inflater.inflate(mLayout, parent, false);
+		    
+		    final ImageView wineImage = (ImageView) wineRow.findViewById(R.id.wine_image);
+		    wineImage.setVisibility(View.INVISIBLE);
+		    
+		    final Handler downloadImageHandler = new Handler() {
 				@Override
 				public void handleMessage(Message msg) {
 					super.handleMessage(msg);
 					if (wineImage != null) {
 						wineImage.setImageBitmap((Bitmap)msg.obj);
 						wineImage.setVisibility(View.VISIBLE);
+						wineRow.findViewById(R.id.loading).setVisibility(View.GONE);
 					}
 				}
 	        };
 	        
 	        final Wine wine = getItem(position);
+	        
 	        Thread downloader = new Thread(new Runnable() {
 				@Override
 				public void run() {
 					Message msg = new Message();
-					msg.obj = wine.getBitmap(getActivity());
-					dowloadImageHandler.sendMessage(msg);				
+					msg.obj = wine.getBitmap(getContext());
+					downloadImageHandler.sendMessage(msg);
 				}
 			});
-			
+	        
 	        downloader.start();
 	        
 	        TextView wineName = (TextView) wineRow.findViewById(R.id.wine_name);
 	        wineName.setText(wine.getName());
 	        
-	        TextView winehouse = (TextView) wineRow.findViewById(R.id.wine_name);
-	        winehouse.setText(wine.getWineHouse());
-	        
-			return wineRow;
-		}		
+	        TextView winehouse = (TextView) wineRow.findViewById(R.id.winehouse);
+	        winehouse.setText(wine.getWinehouse());
+
+		    return wineRow;
+		}
 		
 	}
 }

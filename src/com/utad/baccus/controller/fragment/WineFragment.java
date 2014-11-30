@@ -64,7 +64,7 @@ public class WineFragment extends Fragment {
         txt_wineType.setText(mWine.getType());
         
         TextView txt_wineHouse = (TextView) mRoot.findViewById(R.id.winehouse);
-        txt_wineHouse.setText(mWine.getWineHouse());
+        txt_wineHouse.setText(mWine.getWinehouse());
         
         TextView txt_wineNotes = (TextView) mRoot.findViewById(R.id.wine_notes);
         txt_wineNotes.setText(mWine.getNotes());

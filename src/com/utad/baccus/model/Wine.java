@@ -67,7 +67,7 @@ public class Wine implements Serializable {
 	public void setURL(String uRL) {
 		mURL = uRL;
 	}
-	public String getWineHouse() {
+	public String getWinehouse() {
 		return mWineHouse;
 	}
 	public void setWineHouse(String wineHouse) {
