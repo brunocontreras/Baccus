@@ -40,8 +40,10 @@ public class WineListFragment extends Fragment {
 		final ListView list = (ListView) root.findViewById(R.id.wine_list);
 		
 		AsyncTask<Void, Void, List<Wine>> asyncTask = new AsyncTask<Void, Void, List<Wine>>() {
+			
 			private ProgressDialog progressDialog = null;			
-			@Override
+			
+			@Override			
 			protected void onPreExecute() {
 				super.onPreExecute();
 				progressDialog = new ProgressDialog(getActivity());
@@ -101,8 +103,9 @@ public class WineListFragment extends Fragment {
 
 		@Override
 		public View getView(final int position, View convertView, ViewGroup parent) {
-			LayoutInflater inflater = (LayoutInflater) getContext()
-					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			
+			LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			
 		    final View wineRow = inflater.inflate(mLayout, parent, false);
 		    
 		    final ImageView wineImage = (ImageView) wineRow.findViewById(R.id.wine_image);
